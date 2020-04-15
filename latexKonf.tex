@@ -1,0 +1,116 @@
+\documentclass[a4paper,polish,12pt]{article}
+    \usepackage[utf8]{inputenc}
+    \usepackage[T1]{fontenc}
+    \usepackage{lmodern}
+	\usepackage{amsmath}
+	\usepackage{xcolor}
+    \usepackage{babel}
+    \usepackage{csquotes}
+    \DeclareQuoteAlias{croatian}{polish}
+    \usepackage[%
+    style=verbose-ibid, % numeric, alphabetic, authoryear, ect.
+    sorting=nty,
+    isbn=false,
+    abbreviate = false,
+    backend=biber,]{biblatex}
+
+    \renewcommand*{\newunitpunct}{\addcomma\space}
+    \renewbibmacro*{in:}{}
+
+    \usepackage{xpatch}
+
+    \xpatchbibdriver{book}{%
+    \newunit
+    \iffieldundef{maintitle}
+    {\printfield{volume}%
+    \printfield{part}}
+    {}%
+    }
+    {%
+    }{}{}
+
+    \xpatchbibdriver{book}{%
+    \usebibmacro{publisher+location+date}%
+    }
+    {%
+    \usebibmacro{publisher+location+date}%
+    \newunit
+    \printfield{volume}%
+    \printfield{part}
+    \usebibmacro{finentry}
+    }{}{}
+
+    \DeclareFieldFormat{journaltitle}{\mkbibquote{#1}}
+    \DeclareFieldFormat[article,periodical]{number}{nr.  #1}% number of a journal
+
+    \DeclareFieldFormat
+    [article,inbook,incollection,inproceedings,patent,thesis,unpublished]
+    {title}{\mkbibemph{#1}}
+    %
+    \renewbibmacro*{journal+issuetitle}{%
+    \usebibmacro{journal}%
+    \setunit*{\addspace}%
+    \iffieldundef{series}
+    {}
+    {\newunit
+    \printfield{series}%
+    \setunit{\addspace}}%
+    \usebibmacro{issue+date}%
+    \setunit{\addspace}%
+    \usebibmacro{issue}%
+    \setunit{\addspace}%
+    \usebibmacro{volume+number+eid}%
+    \newunit}
+
+    \renewbibmacro*{issue+date}{%
+    \iffieldundef{issue}
+    {\usebibmacro{date}}
+    {\printfield{issue}%
+    \setunit*{\addspace}%
+    \usebibmacro{date}}%
+    \newunit}
+
+    \renewbibmacro*{publisher+location+date}{%
+    \printlist{publisher}%
+    \iflistundef{publisher}
+    {\setunit*{\addcomma\space}}
+    {\setunit*{\addcomma\space}}%
+    \printlist{location}%
+    \setunit*{\addspace}%
+    \usebibmacro{date}%
+    \newunit}
+\usepackage{graphicx}
+\usepackage{color}
+
+\usepackage{listings}
+ \renewcommand{\lstlistingname}{kod} %zmiana podpisu na polski
+
+\definecolor{dkgreen}{rgb}{0,0.6,0}
+\definecolor{gray}{rgb}{0.5,0.5,0.5}
+\definecolor{mauve}{rgb}{0.58,0,0.82}
+
+
+\lstset{frame=tb,
+ language=Python,
+ aboveskip=3mm,
+ belowskip=3mm,
+ showstringspaces=false,
+ columns=flexible,
+ basicstyle={\small\ttfamily},
+ numbers=none,
+ numberstyle=\tiny\color{gray},
+ keywordstyle=\color{blue},
+ commentstyle=\color{dkgreen},
+ stringstyle=\color{mauve},
+ breaklines=true,
+ breakatwhitespace=true,
+ tabsize=3
+}
+
+\usepackage{hyperref}
+\newtheorem{theorem}{Twierdzenie}
+\addbibresource{bik.bib}
+\newtheorem{tw}{Twierdzenie}
+\title{Projekt Cyfrowe przetwarzanie sygnałów}
+\date{}
+\author{Szymon Kozakiewicz}
